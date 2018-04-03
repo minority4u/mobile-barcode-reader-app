@@ -19,6 +19,5 @@
 
 
     </application>
-    <uses-permission android:name="android.permission.NFC" />
-    <uses-feature android:name="android.hardware.nfc" />
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

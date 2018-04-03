@@ -23,7 +23,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+
 import java.util.List;
+
+import helpers.APIService;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
     private Button scanBtn;
@@ -37,6 +41,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         formatTxt = findViewById(R.id.scan_format);
         contentTxt = findViewById(R.id.scan_content);
         scanBtn.setOnClickListener(this);
+        APIService apiService= new APIService();
+        try {
+            apiService.getBoxData();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -52,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         if (scanningResult != null) {
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
+
             formatTxt.setText("FORMAT: " + scanFormat);
             contentTxt.setText("CONTENT: " + scanContent);
         } else {
