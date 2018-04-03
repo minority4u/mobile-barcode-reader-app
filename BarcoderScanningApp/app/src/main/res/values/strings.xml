@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BarcoderScanningApp</string>
+
+    <string name="scan">Scan barcode</string>
+    <string name="formatText">FORMAT: </string>
+    <string name="contentText">CONTENT: </string>
+</resources>
