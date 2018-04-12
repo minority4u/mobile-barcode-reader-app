@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Reading App</string>
-    <string name="formatText">FORMAT</string>
-    <string name="contentText">CONTENT</string>
+    <string name="idText">ID</string>
+    <string name="addressText">Adresse</string>
     <string name="barcodeScan">Scan Barcode</string>
     <string name="nfcScan">Scan NFC</string>
     <string name="title_activity_main2">MainActivity2</string>

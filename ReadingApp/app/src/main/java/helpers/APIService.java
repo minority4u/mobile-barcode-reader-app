@@ -2,6 +2,7 @@ package helpers;
 
         import android.preference.PreferenceActivity;
 
+        import com.example.crist.readingapp.MainActivity;
         import com.loopj.android.http.*;
         import com.loopj.android.http.JsonHttpResponseHandler;
         import org.json.JSONArray;
@@ -11,14 +12,19 @@ package helpers;
         import cz.msebera.android.httpclient.HttpStatus;
 
 public class APIService {
+    private MainActivity callingActivity;
 
-    public void getBoxData() throws JSONException {
-        BoxRestClient.get("boxes/", new JsonHttpResponseHandler() {
+    public void getBoxData(String box_id, final MainActivity callingActivity) throws JSONException {
+        this.callingActivity=callingActivity;
+        BoxRestClient.get("boxes/"+box_id, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // If the response is JSONObject instead of expected JSONArray
                 super.onSuccess(statusCode, headers, response);
-                System.out.println("JSONObject response"+ response.toString());
+                System.out.println("JSONObject response in Callback"+ response.toString());
+                if(callingActivity!=null) {
+                    callingActivity.onBoxdataReceived(response);
+                }
             }
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
@@ -26,6 +32,10 @@ public class APIService {
 
                 // Do something with the response
                 System.out.println("JSONArray"+timeline.toString());
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable error ,JSONObject response){
+                System.out.println(error.toString());
             }
         });
     }
