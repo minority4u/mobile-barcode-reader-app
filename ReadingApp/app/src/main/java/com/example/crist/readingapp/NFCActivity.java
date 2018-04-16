@@ -17,18 +17,30 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.nfcreader.parser.NdefMessageParser;
 import com.nfcreader.record.ParsedNdefRecord;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.List;
 
-public class NFCActivity extends AppCompatActivity{
+import helpers.APIService;
+import model.Box;
+
+public class NFCActivity extends AppCompatActivity implements BoxdataReceivingActivity{
 
     private TextView  text;
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
+    private APIService apiService;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +49,7 @@ public class NFCActivity extends AppCompatActivity{
 
         text = (TextView) findViewById(R.id.text);
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        this.apiService= new APIService();
 
         if (nfcAdapter == null) {
             Toast.makeText(this, "No NFC", Toast.LENGTH_SHORT).show();
@@ -104,6 +117,14 @@ public class NFCActivity extends AppCompatActivity{
         }
     }
 
+    private void requestBoxdata(String scanContent){
+        try {
+            apiService.getBoxData(scanContent, this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void displayMsgs(NdefMessage[] msgs) {
         if (msgs == null || msgs.length == 0)
             return;
@@ -117,8 +138,7 @@ public class NFCActivity extends AppCompatActivity{
             String str = record.str();
             builder.append(str).append("\n");
         }
-
-        text.setText(builder.toString());
+        requestBoxdata(builder.toString());
     }
 
     private String dumpTagData(Tag tag) {
@@ -245,4 +265,22 @@ public class NFCActivity extends AppCompatActivity{
         return result;
     }
 
+    @Override
+    public void onBoxdataReceived(JSONObject response){
+        System.out.println("onBoxdataREceived: "+response.toString());
+        String address="";
+        final ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            Box box = mapper.readValue(response.toString(), Box.class);
+            text.setText(box.toString());
+
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -2,6 +2,7 @@ package helpers;
 
         import android.preference.PreferenceActivity;
 
+        import com.example.crist.readingapp.BoxdataReceivingActivity;
         import com.example.crist.readingapp.MainActivity;
         import com.loopj.android.http.*;
         import com.loopj.android.http.JsonHttpResponseHandler;
@@ -12,9 +13,9 @@ package helpers;
         import cz.msebera.android.httpclient.HttpStatus;
 
 public class APIService {
-    private MainActivity callingActivity;
+    private BoxdataReceivingActivity callingActivity;
 
-    public void getBoxData(String box_id, final MainActivity callingActivity) throws JSONException {
+    public void getBoxData(String box_id, final BoxdataReceivingActivity callingActivity) throws JSONException {
         this.callingActivity=callingActivity;
         BoxRestClient.get("boxes/"+box_id, new JsonHttpResponseHandler() {
             @Override

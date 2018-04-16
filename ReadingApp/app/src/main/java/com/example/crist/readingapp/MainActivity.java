@@ -22,11 +22,10 @@ import java.io.IOException;
 import helpers.APIService;
 import model.Box;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, BoxdataReceivingActivity{
     private Button scanBarcodeBtn, scanNFCBtn;
-    private TextView idTxt, addressTxt, text;
+    private TextView addressTxt;
     private APIService apiService;
-
 
      @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         scanBarcodeBtn = (Button)findViewById(R.id.scan_barcode_button);
         scanNFCBtn =(Button)findViewById(R.id.scan_nfc_button);
-        idTxt = (TextView)findViewById(R.id.scan_id);
         addressTxt = (TextView)findViewById(R.id.scan_street);
 
         scanBarcodeBtn.setOnClickListener(this);
@@ -64,8 +62,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String scanFormat = scanningResult.getFormatName();
 
 
-            idTxt.setText("ID: " + scanFormat);
-            addressTxt.setText("Address: " + scanContent);
+//            idTxt.setText("ID: " + scanFormat);
+//            addressTxt.setText("Address: " + scanContent);
             try {
                 apiService.getBoxData(scanContent, this);
             } catch (JSONException e) {
@@ -77,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             toast.show();
         }
     }
+    @Override
     public void onBoxdataReceived(JSONObject response){
          System.out.println("onBoxdataREceived: "+response.toString());
          String address="";
@@ -85,16 +84,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          try {
             Box box = mapper.readValue(response.toString(), Box.class);
             addressTxt.setText(box.toString());
-
-//            address.concat(response.getString("current_FirstName"));
-//            address.concat(response.getString("current_LastName"));
-//            address.concat(response.getString("current_Street"));
-//            address.concat(response.getString("current_StreetNo"));
-//            address.concat(response.getString("current_Plz"));
-//            address.concat(response.getString("current_City"));
-//            address.concat(response.getString("current_Country"));
-//
-//            addressTxt.setText(address);
 
 
         } catch (JsonParseException e) {
