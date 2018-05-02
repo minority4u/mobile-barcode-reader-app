@@ -1,6 +1,6 @@
 package helpers;
 
-import com.example.crist.readingapp.BoxdataReceivingActivity;
+import com.example.crist.writingapp.BoxdataWritingActivity;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -10,9 +10,9 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
 public class APIService {
-    private BoxdataReceivingActivity callingActivity;
+    private BoxdataWritingActivity callingActivity;
 
-    public void getBoxData(String box_id, final BoxdataReceivingActivity callingActivity) throws JSONException {
+    public void getBoxData(String box_id, final BoxdataWritingActivity callingActivity) throws JSONException {
         this.callingActivity=callingActivity;
         BoxRestClient.get("boxes/"+box_id, new JsonHttpResponseHandler() {
             @Override
