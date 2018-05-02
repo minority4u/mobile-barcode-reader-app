@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     @Override
     public void onBoxdataReceived(JSONObject response){
-         System.out.println("onBoxdataREceived: "+response.toString());
+         System.out.println("onBoxdataReceived: "+response.toString());
          String address="";
          final ObjectMapper mapper = new ObjectMapper();
 
