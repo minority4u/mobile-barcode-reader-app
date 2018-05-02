@@ -6,7 +6,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 public class BoxRestClient {
-    private static final String BASE_URL = "https://proxyapi02.cfapps.eu10.hana.ondemand.com/";
+    private static final String BASE_URL = "https://proxyapi03.cfapps.eu10.hana.ondemand.com/";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
