@@ -1,4 +1,4 @@
-package model;
+package com.example.crist.writingapp.models;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -44,6 +44,7 @@ this.additionalProperties.put(name, value);
 }
 @Override
 public String toString() {
-return "";
+
+    return "";
 }
 }

@@ -14,17 +14,17 @@
         android:layout_marginBottom="100dp"
         android:checked="false"
         android:text="Change Data of Box"
-        android:textOff="Data 1"
-        android:textOn="Data 2"
+        android:textOff="@string/data_1"
+        android:textOn="@string/data_2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:checked="false" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/addressTxt"
         android:layout_width="wrap_content"
-        android:layout_height="29dp"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="76dp"
