@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2979ff</color>
-    <color name="colorPrimaryDark">#004ecb</color>
-    <color name="colorPrimaryLight">#75a7ff</color>
+
+    <!--Version mit dunklem blau-->
+    <!--<color name="colorPrimary">#2979ff</color>-->
+    <!--<color name="colorPrimaryDark">#004ecb</color>-->
+    <!--<color name="colorPrimaryLight">#75a7ff</color>-->
+
+    <color name="colorPrimary">#ef6c00</color>
+    <color name="colorPrimaryDark">#b53d00</color>
+    <color name="colorPrimaryLight">#ff9d3f</color>
 
     <color name="colorSecondary">#009688</color>
     <color name="colorSecondaryDark">#00675b</color>
@@ -12,7 +18,7 @@
     <!--<color name="backgroundLight">#fff</color>-->
     <color name="backgroundLight">#E1E1E0</color>
 
-    <color name="textBackground">#e1f5fe</color>
+    <color name="textBackground">#e0e0e0</color>
 
 
     <!--<color name="colorSecondary">#ef6c00</color>
