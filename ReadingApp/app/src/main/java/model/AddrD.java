@@ -17,7 +17,8 @@ import java.util.Map;
 "str_name",
 "str_no",
 "city",
-"post_code"
+"post_code",
+        "country"
 })
 public class AddrD {
 @JsonProperty("id")
@@ -32,6 +33,8 @@ public String strNo;
 public String city;
 @JsonProperty("post_code")
 public String postCode;
+@JsonProperty("country")
+public String country;
 @JsonIgnore
 private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 @JsonAnyGetter

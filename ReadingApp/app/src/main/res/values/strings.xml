@@ -1,8 +1,9 @@
 <resources>
-    <string name="app_name">Reading App</string>
+    <string name="app_name">RevoTrace</string>
     <string name="idText">ID</string>
     <string name="addressText">Adresse</string>
-    <string name="barcodeScan">Scan Barcode</string>
-    <string name="nfcScan">Scan NFC</string>
+    <string name="barcodeScan">Barcode</string>
+    <string name="nfcScan">NFC</string>
+    <string name="emptyAddress">Please scan the RevoTrace Label.</string>
     <string name="title_activity_main2">MainActivity2</string>
 </resources>

@@ -24,7 +24,7 @@ import model.Box;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, BoxdataReceivingActivity{
     private Button scanBarcodeBtn, scanNFCBtn;
-    private TextView addressTxt;
+    private TextView addressTxt, statusTxt;
     private APIService apiService;
 
      @Override
@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         scanBarcodeBtn = (Button)findViewById(R.id.scan_barcode_button);
         scanNFCBtn =(Button)findViewById(R.id.scan_nfc_button);
-        addressTxt = (TextView)findViewById(R.id.scan_street);
+        addressTxt = (TextView)findViewById(R.id.box_address_textView);
+        statusTxt = (TextView)findViewById(R.id.box_status_textView);
 
         scanBarcodeBtn.setOnClickListener(this);
         scanNFCBtn.setOnClickListener(this);
@@ -83,7 +84,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
          try {
             Box box = mapper.readValue(response.toString(), Box.class);
-            addressTxt.setText(box.toString());
+            statusTxt.setText(box.getBoxStatusToString());
+            addressTxt.setText(box.getBoxDestinationAddressToString());
 
 
         } catch (JsonParseException e) {

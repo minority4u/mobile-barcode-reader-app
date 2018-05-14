@@ -59,5 +59,15 @@ public class Box {
 
     }
 
+    public String getBoxStatusToString(){
+        return "ID:"+ this.id + "\n"+
+                this.status + "\n" ;
+    }
 
+    public String getBoxDestinationAddressToString(){
+        return this.addrD.name + "\n"+
+                this.addrD.strName + " " + this.addrD.strNo + "\n"+
+                this.addrD.postCode + " " + this.addrD.city + "\n"+
+                this.addrD.country;
+    }
 }
