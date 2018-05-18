@@ -36,7 +36,8 @@ import model.Box;
 
 public class NFCActivity extends AppCompatActivity implements BoxdataReceivingActivity{
 
-    private TextView  text;
+    private Button scanBarcodeBtn, scanNFCBtn;
+    private TextView addressTxt, statusTxt;
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
     private APIService apiService;
@@ -47,9 +48,16 @@ public class NFCActivity extends AppCompatActivity implements BoxdataReceivingAc
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc);
 
-        text = (TextView) findViewById(R.id.text);
+        scanBarcodeBtn = (Button)findViewById(R.id.scan_barcode_button);
+        scanNFCBtn =(Button)findViewById(R.id.scan_nfc_button);
+        addressTxt = (TextView)findViewById(R.id.box_address_textView);
+        statusTxt = (TextView)findViewById(R.id.box_status_textView);
+
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         this.apiService= new APIService();
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher2);
 
         if (nfcAdapter == null) {
             Toast.makeText(this, "No NFC", Toast.LENGTH_SHORT).show();
@@ -273,7 +281,8 @@ public class NFCActivity extends AppCompatActivity implements BoxdataReceivingAc
 
         try {
             Box box = mapper.readValue(response.toString(), Box.class);
-            text.setText(box.toString());
+            statusTxt.setText(box.getBoxStatusToString());
+            addressTxt.setText(box.getBoxDestinationAddressToString());
 
         } catch (JsonParseException e) {
             e.printStackTrace();
