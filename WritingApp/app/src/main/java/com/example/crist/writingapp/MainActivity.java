@@ -40,15 +40,16 @@ public class MainActivity extends AppCompatActivity implements BoxdataWritingAct
 
         this.apiService= new APIService();
 
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher2);
+
         simpleSwitch.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 requestBoxdata();
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "Toggle to +"+!switchOn+"!", Toast.LENGTH_SHORT);
-                toast.show();
+
             }
         });
     }

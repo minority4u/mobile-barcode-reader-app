@@ -7,6 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorPrimaryLight</item>
         <item name="actionBarTheme">@style/AppTheme.MyActionBarStyle</item>
+        <item name="actionBarStyle">@style/MyActionBarLogo</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -20,6 +21,12 @@
 
     <style name="AppTheme.MyActionBarStyle" parent="AppTheme">
         <item name="android:textColor">@color/colorPrimaryLight</item>
+    </style>
+
+    <style name="MyActionBarLogo" parent="@style/Widget.AppCompat.Light.ActionBar">
+        <item name="background">@color/backgroundTitle</item>
+        <item name="logo">@mipmap/ic_launcher2</item>
+        <item name="displayOptions">useLogo</item>
     </style>
 
 </resources>
