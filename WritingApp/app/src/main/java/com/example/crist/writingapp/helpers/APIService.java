@@ -22,7 +22,7 @@ public class APIService {
                 super.onSuccess(statusCode, headers, response);
                 System.out.println("JSONObject response in Callback"+ response.toString());
                 if(callingActivity!=null) {
-                    callingActivity.onBoxdataReceive(response);
+                    callingActivity.onBoxdataResetSuccesful(response);
                 }
             }
             @Override
@@ -48,9 +48,7 @@ public class APIService {
                 // If the response is JSONObject instead of expected JSONArray
                 super.onSuccess(statusCode, headers, response);
                 System.out.println("JSONObject response in Callback"+ response.toString());
-                if(callingActivity!=null) {
-                    callingActivity.onBoxdataReceive(response);
-                }
+
             }
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
@@ -66,5 +64,31 @@ public class APIService {
         });
     }
 
+    public void putBoxData(String box_id, RequestParams params, final BoxdataWritingActivity callingActivity) throws JSONException{
+        this.callingActivity=callingActivity;
+
+        BoxRestClient.put("boxes/"+box_id,  params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                // If the response is JSONObject instead of expected JSONArray
+                super.onSuccess(statusCode, headers, response);
+                System.out.println("JSONObject response in Callback"+ response.toString());
+                if(callingActivity!=null) {
+                    callingActivity.onBoxdataResetSuccesful(response);
+                }
+            }
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
+                // Pull out the first event on the public timeline
+
+                // Do something with the response
+                System.out.println("JSONArray"+timeline.toString());
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable error ,JSONObject response){
+                System.out.println(error.toString());
+            }
+        });
+    }
 }
 
