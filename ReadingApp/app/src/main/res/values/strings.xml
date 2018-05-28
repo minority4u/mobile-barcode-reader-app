@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RevoTrace</string>
+    <string name="app_name">RevoTrace customer</string>
     <string name="idText">ID</string>
     <string name="addressText">Adresse</string>
     <string name="barcodeScan">Barcode</string>
