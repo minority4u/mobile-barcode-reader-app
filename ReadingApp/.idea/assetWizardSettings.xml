@@ -13,6 +13,18 @@
                       <PersistentState>
                         <option name="children">
                           <map>
+                            <entry key="actionbar">
+                              <value>
+                                <PersistentState>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="C:\Users\crist\Google Drive\ME310 Spring Quarter\HSMADropboxFiles\02 Winter Quarter\03 Documentation\benchmarking_icon-25.png" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
                             <entry key="launcher">
                               <value>
                                 <PersistentState>
@@ -23,7 +35,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="scalingPercent" value="107" />
+                                                <entry key="scalingPercent" value="61" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -37,8 +49,9 @@
                                       <entry key="backgroundAssetType" value="COLOR" />
                                       <entry key="backgroundColor" value="ffffff" />
                                       <entry key="backgroundLayerName" value="ic_launcher_background" />
-                                      <entry key="foregroundImage" value="C:\Users\crist\OneDrive\Dokumente\GitHub\BarcodeReader\BarcoderScanningApp\app\src\main\res\mipmap-hdpi\revoTrace1.png" />
-                                      <entry key="outputName" value="logo" />
+                                      <entry key="foregroundImage" value="C:\Users\crist\Google Drive\ME310 Spring Quarter\HSMADropboxFiles\02 Winter Quarter\03 Documentation\benchmarking_icon-25.png" />
+                                      <entry key="foregroundLayerName" value="logo_return" />
+                                      <entry key="outputName" value="return" />
                                     </map>
                                   </option>
                                 </PersistentState>

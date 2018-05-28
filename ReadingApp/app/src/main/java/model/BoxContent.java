@@ -16,10 +16,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "style",
         "color",
         "size",
-        "prize",
+        "price",
         "condition"
 })
-public class OrderContent {
+public class BoxContent {
 
         @JsonProperty("uri")
         public String uri;
@@ -33,8 +33,8 @@ public class OrderContent {
         public String color;
         @JsonProperty("size")
         public String size;
-        @JsonProperty("prize")
-        public String prize;
+        @JsonProperty("price")
+        public String price;
         @JsonProperty("condition")
         public String condition;
         @JsonIgnore

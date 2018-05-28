@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
                 "uri",
                 "name",
                 "status",
+                "customerStatus",
                 "weight",
                 "size",
                 "addr_c",
@@ -28,6 +29,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
             public String name;
             @JsonProperty("status")
             public String status;
+            @JsonProperty("customerStatus")
+            public String customerStatus;
             @JsonProperty("weight")
             public String weight;
             @JsonProperty("size")
@@ -37,7 +40,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
             @JsonProperty("addr_d")
             public AddrD addrD;
             @JsonProperty("box_contents")
-            public List<OrderContent> boxContents = null;
+            public List<BoxContent> boxContents = null;
             @JsonIgnore
             private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -63,15 +66,22 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     }
 
     public String getBoxStatusToString(){
-        return this.status + "\n" +
-                "Weight: " +this.weight +"\n"+
-                "Size: "+this.size;
+        return this.customerStatus + "\n";
     }
 
-    public String getBoxDestinationAddressToString(){
-        return this.addrD.name + "\n"+
-                this.addrD.strName + " " + this.addrD.strNo + "\n"+
-                this.addrD.postCode + " " + this.addrD.city + "\n"+
-                this.addrD.country;
+    public String getBoxContentToString(){
+
+                String returnString = "";
+
+                for(int i = 0; i<= this.boxContents.size(); i++){
+                    BoxContent boxContent = this.boxContents.get(i);
+
+                    returnString += "Name: " + boxContent.name +"\n";
+                    returnString += "Color: " + boxContent.color+"\n";
+                    returnString += "Size: " + boxContent.size+"\n";
+                    returnString += "Price: " + boxContent.price +"\n\n";
+                }
+
+                return returnString;
     }
 }
