@@ -20,8 +20,7 @@ import android.widget.Toast;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
+import com.loopj.android.http.RequestParams;
 import com.nfcreader.parser.NdefMessageParser;
 import com.nfcreader.record.ParsedNdefRecord;
 
@@ -34,13 +33,14 @@ import java.util.List;
 import helpers.APIService;
 import model.Box;
 
-public class NFCActivity extends AppCompatActivity implements BoxdataReceivingActivity{
+public class NFCActivity extends AppCompatActivity implements View.OnClickListener, BoxdataReceivingActivity{
 
-    private Button scanBarcodeBtn, scanNFCBtn;
-    private TextView addressTxt, statusTxt;
+    private Button scanBarcodeBtn, scanNFCBtn, returnButton;
+    private TextView contentTxt, statusTxt;
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
     private APIService apiService;
+    private Box currentBox;
 
 
     @Override
@@ -50,7 +50,8 @@ public class NFCActivity extends AppCompatActivity implements BoxdataReceivingAc
 
         scanBarcodeBtn = (Button)findViewById(R.id.scan_barcode_button);
         scanNFCBtn =(Button)findViewById(R.id.scan_nfc_button);
-        addressTxt = (TextView)findViewById(R.id.box_address_textView);
+        returnButton =(Button)findViewById(R.id.return_button);
+        contentTxt = (TextView)findViewById(R.id.box_address_textView);
         statusTxt = (TextView)findViewById(R.id.box_status_textView);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -58,6 +59,7 @@ public class NFCActivity extends AppCompatActivity implements BoxdataReceivingAc
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher2);
+        returnButton.setOnClickListener(this);
 
         if (nfcAdapter == null) {
             Toast.makeText(this, "No NFC", Toast.LENGTH_SHORT).show();
@@ -275,14 +277,15 @@ public class NFCActivity extends AppCompatActivity implements BoxdataReceivingAc
 
     @Override
     public void onBoxdataReceived(JSONObject response){
-        System.out.println("onBoxdataREceived: "+response.toString());
+        System.out.println("onBoxdataReceived: "+response.toString());
         String address="";
         final ObjectMapper mapper = new ObjectMapper();
 
         try {
-            Box box = mapper.readValue(response.toString(), Box.class);
-            statusTxt.setText(box.getBoxStatusToString());
-            addressTxt.setText(box.getBoxDestinationAddressToString());
+            currentBox = mapper.readValue(response.toString(), Box.class);
+            statusTxt.setText(currentBox.getBoxStatusToString());
+            contentTxt.setText(currentBox.getBoxContentToString());
+
 
         } catch (JsonParseException e) {
             e.printStackTrace();
@@ -292,4 +295,77 @@ public class NFCActivity extends AppCompatActivity implements BoxdataReceivingAc
             e.printStackTrace();
         }
     }
+
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId()==R.id.return_button){
+            startReturn();
+        }
+    }
+
+    private void startReturn() {
+        try {
+            apiService.putAddressData("2", getNewAddressParams(),this);
+            apiService.putBoxData(currentBox.id, getNewBoxParams(),this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private RequestParams getNewBoxParams() {
+        RequestParams params=new RequestParams();
+
+        params.put("customerStatus","Return triggered");
+
+        return params;
+    }
+
+    private RequestParams getNewAddressParams() {
+        RequestParams params=new RequestParams();
+
+        params.put("name","Regina Rebai");
+        params.put("str_name","Haven Avenue");
+        params.put("str_no","42");
+        params.put("city","Menlo Park");
+        params.put("post_code","94025");
+        params.put("state", "California");
+        params.put("country","USA");
+
+
+        return params;
+    }
+
+    @Override
+    public void onAddressDataChanged(JSONObject response) {
+
+    }
+
+    @Override
+    public void onBoxDataChanged(JSONObject response) {
+        String address="";
+        final ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            currentBox = mapper.readValue(response.toString(), Box.class);
+            statusTxt.setText(currentBox.getBoxStatusToString());
+            contentTxt.setText(currentBox.getBoxContentToString());
+
+
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Toast toast = Toast.makeText(getApplicationContext(),
+                "Your return is triggered!", Toast.LENGTH_SHORT);
+        toast.show();
+
+        statusTxt.setText(currentBox.getBoxStatusToString());
+    }
+
+
+
 }

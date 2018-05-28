@@ -6,7 +6,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 public class BoxRestClient {
-    private static final String BASE_URL = "https://proxyapi03.cfapps.eu10.hana.ondemand.com/";
+    private static final String BASE_URL = "https://revotrace.cfapps.eu10.hana.ondemand.com/";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
@@ -18,6 +18,11 @@ public class BoxRestClient {
         client.post(getAbsoluteUrl(url), params, responseHandler);
     }
 
+    public static void put(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        System.out.println("putAdressData called"+ getAbsoluteUrl(url) );
+        client.put(getAbsoluteUrl(url), params, responseHandler);
+
+    }
     private static String getAbsoluteUrl(String relativeUrl) {
         return BASE_URL + relativeUrl;
     }

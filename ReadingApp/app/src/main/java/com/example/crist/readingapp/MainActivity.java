@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,9 +24,10 @@ import helpers.APIService;
 import model.Box;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, BoxdataReceivingActivity{
-    private Button scanBarcodeBtn, scanNFCBtn;
-    private TextView addressTxt, statusTxt;
+    private Button scanBarcodeBtn, scanNFCBtn, returnButton;
+    private TextView contentTxt, statusTxt;
     private APIService apiService;
+    private Box currentBox;
 
      @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +36,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         scanBarcodeBtn = (Button)findViewById(R.id.scan_barcode_button);
         scanNFCBtn =(Button)findViewById(R.id.scan_nfc_button);
-        addressTxt = (TextView)findViewById(R.id.box_address_textView);
+         returnButton =(Button)findViewById(R.id.return_button);
+        contentTxt = (TextView)findViewById(R.id.box_address_textView);
         statusTxt = (TextView)findViewById(R.id.box_status_textView);
 
         scanBarcodeBtn.setOnClickListener(this);
         scanNFCBtn.setOnClickListener(this);
+        returnButton.setOnClickListener(this);
 
         this.apiService= new APIService();
 
@@ -56,6 +60,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent myIntent = new Intent(MainActivity.this, NFCActivity.class);
             MainActivity.this.startActivity(myIntent);
         }
+        else if (view.getId()==R.id.return_button){
+            startReturn();
+        }
+    }
+
+    private void startReturn() {
+        try {
+            apiService.putAddressData("2", getNewAddressParams(),this);
+            apiService.putBoxData(currentBox.id, getNewBoxParams(),this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private RequestParams getNewBoxParams() {
+        RequestParams params=new RequestParams();
+
+        params.put("customerStatus","Return triggered");
+
+        return params;
+    }
+
+    private RequestParams getNewAddressParams() {
+        RequestParams params=new RequestParams();
+
+             params.put("name","Regina Rebai");
+             params.put("str_name","Haven Avenue");
+             params.put("str_no","42");
+             params.put("city","Menlo Park");
+             params.put("post_code","94025");
+             params.put("state", "California");
+             params.put("country","USA");
+
+
+        return params;
     }
 
     //Show content of barcode scanning
@@ -67,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 //            idTxt.setText("ID: " + scanFormat);
-//            addressTxt.setText("Address: " + scanContent);
+//            contentTxt.setText("Address: " + scanContent);
             try {
                 apiService.getBoxData(scanContent, this);
             } catch (JSONException e) {
@@ -86,9 +125,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          final ObjectMapper mapper = new ObjectMapper();
 
          try {
-            Box box = mapper.readValue(response.toString(), Box.class);
-            statusTxt.setText(box.getBoxStatusToString());
-            addressTxt.setText(box.getBoxDestinationAddressToString());
+            currentBox = mapper.readValue(response.toString(), Box.class);
+            statusTxt.setText(currentBox.getBoxStatusToString());
+            contentTxt.setText(currentBox.getBoxContentToString());
 
 
         } catch (JsonParseException e) {
@@ -98,6 +137,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          } catch (IOException e) {
              e.printStackTrace();
          }
+    }
+
+    @Override
+    public void onAddressDataChanged(JSONObject response) {
+
+    }
+
+    @Override
+    public void onBoxDataChanged(JSONObject response) {
+        String address="";
+        final ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            currentBox = mapper.readValue(response.toString(), Box.class);
+            statusTxt.setText(currentBox.getBoxStatusToString());
+            contentTxt.setText(currentBox.getBoxContentToString());
+
+
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Toast toast = Toast.makeText(getApplicationContext(),
+                "Your return is triggered!", Toast.LENGTH_SHORT);
+        toast.show();
+
+        statusTxt.setText(currentBox.getBoxStatusToString());
     }
 
 }

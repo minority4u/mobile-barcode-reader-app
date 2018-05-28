@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         @JsonInclude(JsonInclude.Include.NON_NULL)
         @JsonPropertyOrder({
                 "uri",
+                "id",
                 "name",
                 "status",
                 "customerStatus",
@@ -25,6 +26,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
             @JsonProperty("uri")
             public String uri;
+            @JsonProperty("id")
+            public String id;
             @JsonProperty("name")
             public String name;
             @JsonProperty("status")
@@ -53,6 +56,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
             public void setAdditionalProperty(String name, Object value) {
                 this.additionalProperties.put(name, value);
             }
+
     @Override
     public String toString() {
         return  "Status: " +this.status + "\n" +
@@ -73,7 +77,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
                 String returnString = "";
 
-                for(int i = 0; i<= this.boxContents.size(); i++){
+                for(int i = 0; i < this.boxContents.size(); i++){
                     BoxContent boxContent = this.boxContents.get(i);
 
                     returnString += "Name: " + boxContent.name +"\n";

@@ -22,7 +22,7 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".NFCActivity"></activity>
+        <activity android:name=".NFCActivity" android:screenOrientation="portrait"></activity>
 
     </application>
 
