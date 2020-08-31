@@ -1,1 +1,1 @@
-# barcode reader for android
+# rapid prototype for a Android barcode and nfc reader app
